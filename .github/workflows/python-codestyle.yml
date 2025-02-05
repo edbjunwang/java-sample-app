@@ -3,8 +3,6 @@ name: python-codestyle
 on:
   pull_request:
     types: [assigned, edited, opened, synchronize, reopened]
-  push:
-    branches: [ master ]
     
 jobs:
   verify-commits:
