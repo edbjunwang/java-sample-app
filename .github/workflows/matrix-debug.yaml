@@ -67,6 +67,8 @@ jobs:
 
           if [[ "$DIST" == "sles-12sp5" ]] || [[ "$DIST" == "el-7" ]] || [[ "$DIST" == "el-9" ]] ; then
             echo "PYTHON_VERSION=3.9" >> $GITHUB_ENV
+          elif [[ "$DIST" == "ubuntu-24.04" ]]; then
+            echo "PYTHON_VERSION=3.12" >> $GITHUB_ENV
           elif [[ "$DIST" == "debian-12" ]]; then
             echo "PYTHON_VERSION=3.11" >> $GITHUB_ENV
           else
