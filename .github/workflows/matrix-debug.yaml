@@ -39,7 +39,7 @@ jobs:
             distro-version: 12
             arch: arm64
           - distro: ubuntu
-            distro-version: 20.04
+            distro-version: 24.04
             arch: amd64
           - distro: ubuntu
             distro-version: 22.04
