@@ -24,11 +24,8 @@ jobs:
       matrix:
         distro: [ el ]
         distro-version: [ 8, 9 ]
-        arch: [ amd64, ppc64le, s390x ]
+        arch: [ amd64 ]
         include:
-          - distro: debian
-            distro-version: 10
-            arch: amd64
           - distro: debian
             distro-version: 11
             arch: amd64
@@ -45,23 +42,8 @@ jobs:
             distro-version: 22.04
             arch: amd64
           - distro: sles
-            distro-version: 12sp5
-            arch: amd64
-          - distro: sles
-            distro-version: 12sp5
-            arch: ppc64le
-          - distro: sles
-            distro-version: 12sp5
-            arch: s390x
-          - distro: sles
             distro-version: 15sp4
             arch: amd64
-          - distro: sles
-            distro-version: 15sp4
-            arch: ppc64le
-          - distro: sles
-            distro-version: 15sp4
-            arch: s390x
           - distro: windows
             distro-version: 2017
             arch: x64
@@ -98,7 +80,7 @@ jobs:
       - name: Install Python dependencies
         shell: bash
         run: |
-          sudo apt-get install -y libkrb5-dev
+          sudo apt update && apt-get install -y libkrb5-dev
           cp requirements.txt pip_requirements.txt
 
           # urllib3 2.x requires openssl 1.1.1+, while RHEL/7 and SLES/12 have openssl 1.0.2 from system
