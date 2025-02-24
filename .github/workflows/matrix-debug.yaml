@@ -80,7 +80,7 @@ jobs:
       - name: Install Python dependencies
         shell: bash
         run: |
-          sudo apt update && apt-get install -y libkrb5-dev
+          sudo apt update && sudo apt-get install -y libkrb5-dev
           cp requirements.txt pip_requirements.txt
 
           # urllib3 2.x requires openssl 1.1.1+, while RHEL/7 and SLES/12 have openssl 1.0.2 from system
