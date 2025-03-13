@@ -28,7 +28,7 @@ jobs:
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           lfs: true
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
@@ -82,7 +82,7 @@ jobs:
           ls ${{ github.workspace }} | tee builds.edb/debian/x86_64/edb-pem-files1-deb11_amd64.txt
           ls ${{github.workspace}} | tee builds.edb/debian/x86_64/edb-pem-files2-deb11_amd64.txt
       - name: Upload packages to artifactory
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: files
           path: builds.edb/debian/x86_64/edb-pem*deb11_amd64.txt
