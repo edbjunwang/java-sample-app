@@ -113,7 +113,13 @@ jobs:
           fi
 
           python -m venv venv
-          venv/bin/pip install -r pip_requirements.txt
+
+          if [[ "${{ matrix.distro }}" == "windows" ]]; then
+            venv/bin/pip install --platform win32  -r pip_requirements.txt
+          else
+            venv/bin/pip install -r pip_requirements.txt
+          fi
+
           rm -f pip_requirements.txt
           venv/bin/pip freeze | tee -a requirements.${{ matrix.distro }}-${{ matrix.distro-version }}-${{ matrix.arch }}.txt
 
