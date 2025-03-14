@@ -36,7 +36,7 @@ psycopg2==2.9.*; python_version >= '3.11'
 python-dateutil==2.*
 SQLAlchemy==1.*
 bcrypt==4.*
-cryptography==42.*
+cryptography==43.*
 sshtunnel==0.*
 gssapi==1.8.*
 pyotp==2.*
