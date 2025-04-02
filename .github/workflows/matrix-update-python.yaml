@@ -27,9 +27,6 @@ jobs:
         arch: [ amd64, ppc64le, s390x ]
         include:
           - distro: debian
-            distro-version: 10
-            arch: amd64
-          - distro: debian
             distro-version: 11
             arch: amd64
           - distro: debian
@@ -39,20 +36,11 @@ jobs:
             distro-version: 12
             arch: arm64
           - distro: ubuntu
-            distro-version: 20.04
+            distro-version: 24.04
             arch: amd64
           - distro: ubuntu
             distro-version: 22.04
             arch: amd64
-          - distro: sles
-            distro-version: 12sp5
-            arch: amd64
-          - distro: sles
-            distro-version: 12sp5
-            arch: ppc64le
-          - distro: sles
-            distro-version: 12sp5
-            arch: s390x
           - distro: sles
             distro-version: 15sp4
             arch: amd64
@@ -80,6 +68,8 @@ jobs:
 
           if [[ "$DIST" == "sles-12sp5" ]] || [[ "$DIST" == "el-7" ]] || [[ "$DIST" == "el-9" ]] ; then
             echo "PYTHON_VERSION=3.9" >> $GITHUB_ENV
+          elif [[ "$DIST" == "ubuntu-24.04" ]]; then
+            echo "PYTHON_VERSION=3.12" >> $GITHUB_ENV
           elif [[ "$DIST" == "debian-12" ]]; then
             echo "PYTHON_VERSION=3.11" >> $GITHUB_ENV
           else
@@ -96,22 +86,14 @@ jobs:
           sudo apt-get install -y libkrb5-dev
           cp requirements.txt pip_requirements.txt
 
-          # urllib3 2.x requires openssl 1.1.1+, while RHEL/7 and SLES/12 have openssl 1.0.2 from system
-          if [[ "${{ matrix.distro}}-${{ matrix.distro-version}}" == "sles-12sp5" ]] || [[ "${{ matrix.distro}}-${{ matrix.distro-version}}" == "el-7" ]] ; then
-            sed -ie 's|urllib3=.*$|urllib3==1.*|' pip_requirements.txt
-
-            # Cryptography new version is not supporting openssl < 1.1.1
-            # Reference: https://cryptography.io/en/latest/faq/#installing-cryptography-with-openssl-0-9-8-1-0-0-1-0-1-1-0-2-1-1-0-fails
-            if [[ "${{ matrix.arch }}" != "amd64" ]]; then
-              sed -ie 's|cryptography.*$|cryptography<=3.0|' pip_requirements.txt
-            fi
-          fi
-
           python -m venv venv
           venv/bin/pip install -r pip_requirements.txt
 
           rm -f pip_requirements.txt
           venv/bin/pip freeze | tee -a requirements.${{ matrix.distro }}-${{ matrix.distro-version }}-${{ matrix.arch }}.txt
+
+          venv/bin/pip install pipdeptree
+          venv/bin/pipdeptree
 
           # add windows specific packages back
           if [[ "${{ matrix.distro }}" == "windows" ]]; then
