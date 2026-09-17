@@ -29,3 +29,11 @@ jobs:
         if: ${{ ! github.event.inputs.foo }}
         run: |
           echo "Not Foo!"
+
+      - name: Run script with step environment variable
+        env:
+          MY_STEP_VAR: "Hello from Step"
+          PORT: 8080
+        run: |
+          echo "The variable value is: $MY_STEP_VAR"
+          echo "Port is set to: $PORT"
